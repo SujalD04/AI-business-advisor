@@ -1,0 +1,60 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dll
+
+# Virtual environments
+.env
+.venv
+venv/
+ENV/
+env/
+.conda/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# PyInstaller
+*.spec
+build/
+dist/
+
+# Installed packages
+*.egg-info/
+.eggs/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Configs with credentials
+config.json
+config.yaml
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Trained models
+*.pkl
+*.joblib
+*.h5
+
+# VSCode
+.vscode/
+.history/
+
+# PyCharm
+.idea/
+
+# Mac & Windows
+.DS_Store
+Thumbs.db
