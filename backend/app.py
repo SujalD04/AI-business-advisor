@@ -59,23 +59,98 @@ if menu == "Form Input":
         }
 
     with st.form("startup_form"):
-        name = st.text_input("Startup Name", value=st.session_state.form_data["name"])
-        industry = st.selectbox("Industry", ["SaaS", "Retail", "Services", "Other"], 
-                                index=["SaaS", "Retail", "Services", "Other"].index(st.session_state.form_data["industry"]))
-        stage = st.selectbox("Stage", ["Idea", "Early", "Growth", "Scale"], 
-                             index=["Idea", "Early", "Growth", "Scale"].index(st.session_state.form_data["stage"]))
-        revenue = st.number_input("Monthly Revenue", min_value=0.0, step=100.0, value=st.session_state.form_data["revenue"])
-        costs = st.number_input("Monthly Costs", min_value=0.0, step=100.0, value=st.session_state.form_data["costs"])
-        churn_rate = st.number_input("Churn Rate (%)", min_value=0.0, max_value=100.0, step=0.1, value=st.session_state.form_data["churn_rate"])
-        marketing_spend = st.number_input("Monthly Marketing Spend", min_value=0.0, step=100.0, value=st.session_state.form_data["marketing_spend"])
-        burn_rate = st.number_input("Monthly Burn Rate", min_value=0.0, step=100.0, value=st.session_state.form_data["burn_rate"])
-        cash_reserves = st.number_input("Cash Reserves", min_value=0.0, step=100.0, value=st.session_state.form_data["cash_reserves"])
-        cac = st.number_input("Customer Acquisition Cost", min_value=0.0, step=10.0, value=st.session_state.form_data["cac"])
-        ltv = st.number_input("Customer Lifetime Value", min_value=0.0, step=10.0, value=st.session_state.form_data["ltv"])
-        monthly_growth_rate = st.number_input("Monthly Growth Rate", min_value=0.0, max_value=1.0, step=0.01, value=st.session_state.form_data["monthly_growth_rate"])
-        market_share = st.number_input("Market Share (%)", min_value=0.0, max_value=100.0, step=0.1, value=st.session_state.form_data["market_share"])
+        st.subheader("🚀 Startup Details")
 
-        submitted = st.form_submit_button("Submit")
+        col1, col2 = st.columns(2)
+        with col1:
+            name = st.text_input(
+                "Startup Name", 
+                value=st.session_state.form_data["name"]
+            )
+        with col2:
+            industry = st.selectbox(
+                "Industry", 
+                ["SaaS", "Retail", "Services", "Other"],
+                index=["SaaS", "Retail", "Services", "Other"].index(
+                    st.session_state.form_data["industry"]
+                )
+            )
+
+        stage = st.selectbox(
+            "Stage", 
+            ["Idea", "Early", "Growth", "Scale"],
+            index=["Idea", "Early", "Growth", "Scale"].index(
+                st.session_state.form_data["stage"]
+            )
+        )
+
+        st.markdown("### 💰 Financials")
+        col1, col2 = st.columns(2)
+        with col1:
+            revenue = st.number_input(
+                "Monthly Revenue ($)", min_value=0.0, step=100.0,
+                value=st.session_state.form_data["revenue"],
+                help="How much revenue does your startup generate per month?"
+            )
+            costs = st.number_input(
+                "Monthly Costs ($)", min_value=0.0, step=100.0,
+                value=st.session_state.form_data["costs"]
+            )
+            burn_rate = st.number_input(
+                "Monthly Burn Rate ($)", min_value=0.0, step=100.0,
+                value=st.session_state.form_data["burn_rate"],
+                help="Monthly cash outflow beyond revenue (expenses - revenue)."
+            )
+        with col2:
+            cash_reserves = st.number_input(
+                "Cash Reserves ($)", min_value=0.0, step=100.0,
+                value=st.session_state.form_data["cash_reserves"],
+                help="Total cash available to sustain operations."
+            )
+            profit_margin = (revenue - costs) / revenue if revenue > 0 else 0.0
+            st.metric("Profit Margin", f"{profit_margin:.2%}")
+
+        st.markdown("### 📈 Growth Metrics")
+        col1, col2 = st.columns(2)
+        with col1:
+            churn_rate = st.number_input(
+                "Churn Rate (%)", min_value=0.0, max_value=100.0, step=0.1,
+                value=st.session_state.form_data["churn_rate"]
+            )
+            monthly_growth_rate = st.number_input(
+                "Monthly Growth Rate", min_value=0.0, max_value=1.0, step=0.01,
+                value=st.session_state.form_data["monthly_growth_rate"],
+                help="Growth as a decimal (e.g., 0.2 = 20% monthly growth)."
+            )
+        with col2:
+            market_share = st.number_input(
+                "Market Share (%)", min_value=0.0, max_value=100.0, step=0.1,
+                value=st.session_state.form_data["market_share"]
+            )
+            marketing_spend = st.number_input(
+                "Monthly Marketing Spend ($)", min_value=0.0, step=100.0,
+                value=st.session_state.form_data["marketing_spend"]
+            )
+
+        st.markdown("### 🧮 Unit Economics")
+        col1, col2 = st.columns(2)
+        with col1:
+            cac = st.number_input(
+                "Customer Acquisition Cost (CAC)", min_value=0.0, step=10.0,
+                value=st.session_state.form_data["cac"],
+                help="Average cost of acquiring one customer."
+            )
+        with col2:
+            ltv = st.number_input(
+                "Customer Lifetime Value (LTV)", min_value=0.0, step=10.0,
+                value=st.session_state.form_data["ltv"],
+                help="Average revenue from a customer over their lifetime."
+            )
+            if cac > 0:
+                st.metric("LTV:CAC Ratio", f"{ltv/cac:.2f}")
+
+        submitted = st.form_submit_button("✅ Submit Startup")
+
 
     if submitted:
         # Save session state
