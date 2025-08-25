@@ -87,6 +87,13 @@
       <tr><th>Churn Rate</th><td>{{ "{:.1f}".format(s.churn_rate) }}%</td></tr>
       <tr><th>Predicted Growth</th><td>{{ "{:.2f}".format(s.predicted_growth) }}</td></tr>
       <tr><th>Cluster</th><td>{{ s.cluster }}</td></tr>
+      <tr><th>Profit</th><td>${{ "{:,.2f}".format(s.profit) }}</td></tr>
+      <tr><th>Profit Margin</th><td>{{ "{:.2f}".format(s.profit_margin * 100) }}%</td></tr>
+      <tr><th>Marketing Efficiency</th><td>{{ "{:.2f}".format(s.marketing_efficiency) }}</td></tr>
+      <tr><th>LTV/CAC Ratio</th><td>{{ "{:.2f}".format(s.ltv_cac_ratio) }}</td></tr>
+      <tr><th>Runway (Months)</th><td>{{ "{:.1f}".format(s.runway_months) }}</td></tr>
+      <tr><th>Growth Category</th><td>{{ s.growth_category }}</td></tr>
+
     </table>
 
     <!-- Recommendations -->
@@ -111,6 +118,18 @@
     <div class="chart">
       <h3>Marketing Efficiency vs Churn</h3>
       <img src="data:image/png;base64,{{ s.charts.marketing_vs_churn }}" width="500">
+    </div>
+    <div class="chart">
+    <h3>Profit Margin vs Predicted Growth</h3>
+    <img src="data:image/png;base64,{{ s.charts.profit_margin_vs_growth }}" width="600">
+    </div>
+    <div class="chart">
+    <h3>LTV/CAC vs Churn</h3>
+    <img src="data:image/png;base64,{{ s.charts.ltv_cac_vs_churn }}" width="600">
+    </div>
+    <div class="chart">
+    <h3>Runway vs Predicted Growth</h3>
+    <img src="data:image/png;base64,{{ s.charts.runway_vs_growth }}" width="600">
     </div>
   </div>
   <div class="page-break"></div>

@@ -1,9 +1,9 @@
 def generate_strategy(df):
     """
-    Enhanced rule-based recommendations:
+    Enhanced rule-based recommendations incorporating new metrics:
     - Uses predicted growth, cluster, churn_rate, marketing efficiency
-    - Adds industry-specific insights
-    - Suggests actionable next steps
+    - Adds financial health, LTV/CAC, runway insights
+    - Industry-specific actionable next steps
     """
     strategies = []
 
@@ -36,13 +36,31 @@ def generate_strategy(df):
 
         # Marketing efficiency
         if row['marketing_efficiency'] < 0.8:
-            recs.append("Marketing spend is low efficiency: reallocate budget or test new channels.")
+            recs.append("Marketing efficiency is low: reallocate budget or test new channels.")
         elif row['marketing_efficiency'] < 1.2:
             recs.append("Moderate marketing efficiency: optimize campaigns for higher ROI.")
 
+        # Profit margin check
+        if row['profit_margin'] < 0.1:
+            recs.append("Profit margin is low: review pricing strategy and reduce unnecessary expenses.")
+        elif row['profit_margin'] > 0.25:
+            recs.append("Healthy profit margin: consider reinvesting for growth or product development.")
+
+        # LTV/CAC ratio
+        if row['ltv_cac_ratio'] < 1:
+            recs.append("Customer acquisition is expensive relative to value: improve retention or optimize acquisition costs.")
+        elif row['ltv_cac_ratio'] > 3:
+            recs.append("Strong LTV/CAC ratio: scaling customer acquisition could be profitable.")
+
+        # Runway and cash reserves
+        if row['runway_months'] < 3:
+            recs.append("Low runway: secure funding or cut non-essential costs to extend runway.")
+        elif row['runway_months'] > 12:
+            recs.append("Healthy cash reserves: opportunity to invest in growth initiatives.")
+
         # Industry-specific recommendations
         if row['industry'] == "SaaS":
-            recs.append("SaaS-specific: prioritize customer onboarding, reduce churn, and monitor subscription metrics.")
+            recs.append("SaaS-specific: prioritize onboarding, reduce churn, and monitor subscription metrics.")
         elif row['industry'] == "Retail":
             recs.append("Retail-specific: analyze inventory turnover, optimize pricing, and enhance customer experience.")
         elif row['industry'] == "Services":
