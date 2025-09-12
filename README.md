@@ -90,7 +90,7 @@ GEMINI_API_KEY=your_api_key_here
 ### 5. Run the app
 
 ```bash
-streamlit run app.py
+streamlit run backend/app.py
 ```
 
 ---
